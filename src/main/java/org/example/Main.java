@@ -1,13 +1,19 @@
 package org.example;
 
+import org.example.service.GithubService;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
+        GithubService githubService = GithubService.getInstance();
         Scanner sc = new Scanner(System.in);
-        askUsername(sc);
+        var username = askUsername(sc).replaceAll("<", "").replaceAll(">", "");
+        githubService.fetchGithubUserEvents(username);
 
     }
 
@@ -36,8 +42,6 @@ public class Main {
         }
         return username;
     }
-
-
 
 
 }
